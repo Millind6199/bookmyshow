@@ -7,7 +7,8 @@
 
             </div>
             <div class="col-9 mt-5">
-                <div class="dark">
+                <div class="dark"
+                  >
                     <main class="container py-4">
                         <div class="h1 text-center" id="pageHeaderTitle">Movie</div>
                         <article class="postcard dark blue">
@@ -52,6 +53,9 @@ import Sidebar from "../Sidebar";
 import Footer from "../Footer";
 export default {
     name: "viewdetail",
+    props: {
+        backgroundImage:String,
+    },
     components:{
         index,
         Sidebar,
@@ -79,13 +83,26 @@ export default {
         },
 
     },
+    computed: {
+        bgImage () {
+            return require('/uploads/' + this.movie_detail.image)
+        },
+        inlineStyle () {
+            return {
+                backgroundImage: `url(${this.bgImage})`
+            }
+        }
+    },
+
     mounted(){
       this.viewdetail()
     },
+
 }
 </script>
 
 <style scoped>
+
 @import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
 $main-green: #79dd09 !default;
 $main-green-rgb-015: rgba(121, 221, 9, 0.1) !default;

@@ -2288,11 +2288,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "viewdetail",
+  props: {
+    backgroundImage: String
+  },
   components: {
     index: _index__WEBPACK_IMPORTED_MODULE_0__.default,
     Sidebar: _Sidebar__WEBPACK_IMPORTED_MODULE_1__.default,
@@ -2318,6 +2322,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     back: function back() {
       this.$router.push('/viewdata');
+    }
+  },
+  computed: {
+    bgImage: function bgImage() {
+      return __webpack_require__("./public/uploads sync recursive ^\\.\\/.*$")("./" + this.movie_detail.image);
+    },
+    inlineStyle: function inlineStyle() {
+      return {
+        backgroundImage: "url(".concat(this.bgImage, ")")
+      };
     }
   },
   mounted: function mounted() {
@@ -7396,6 +7410,81 @@ module.exports = function (cssWithMappingToString) {
 
   return list;
 };
+
+/***/ }),
+
+/***/ "./public/uploads/godzilla-vs-kong-et00122511-16-06-2021-12-47-29.jpg":
+/*!****************************************************************************!*\
+  !*** ./public/uploads/godzilla-vs-kong-et00122511-16-06-2021-12-47-29.jpg ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/godzilla-vs-kong-et00122511-16-06-2021-12-47-29.jpg?e04b88db0cbcfabf794aa44427892f14");
+
+/***/ }),
+
+/***/ "./public/uploads/jumanji-the-next-level-et00077156-22-10-2020-06-15-23.jpg":
+/*!**********************************************************************************!*\
+  !*** ./public/uploads/jumanji-the-next-level-et00077156-22-10-2020-06-15-23.jpg ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/jumanji-the-next-level-et00077156-22-10-2020-06-15-23.jpg?57708b9314ceec577e77c15131023172");
+
+/***/ }),
+
+/***/ "./public/uploads/mumbai-saga-et00105043-16-03-2021-02-46-48.jpg":
+/*!***********************************************************************!*\
+  !*** ./public/uploads/mumbai-saga-et00105043-16-03-2021-02-46-48.jpg ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/mumbai-saga-et00105043-16-03-2021-02-46-48.jpg?3c398d48d6bdc1713e228a0b9a7008ef");
+
+/***/ }),
+
+/***/ "./public/uploads/tom-and-jerry-et00300988-17-05-2021-11-36-56.jpg":
+/*!*************************************************************************!*\
+  !*** ./public/uploads/tom-and-jerry-et00300988-17-05-2021-11-36-56.jpg ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/tom-and-jerry-et00300988-17-05-2021-11-36-56.jpg?0edb2f7c72c4374331761e41e952d499");
+
+/***/ }),
+
+/***/ "./public/uploads/zack-snyder-s-justice-league-et00047164-10-04-2021-03-22-49.jpg":
+/*!****************************************************************************************!*\
+  !*** ./public/uploads/zack-snyder-s-justice-league-et00047164-10-04-2021-03-22-49.jpg ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/zack-snyder-s-justice-league-et00047164-10-04-2021-03-22-49.jpg?9ba89071cd684200006d0391356a4680");
 
 /***/ }),
 
@@ -56116,6 +56205,42 @@ Vue.compile = compileToFunctions;
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Vue);
 
+
+/***/ }),
+
+/***/ "./public/uploads sync recursive ^\\.\\/.*$":
+/*!***************************************!*\
+  !*** ./public/uploads/ sync ^\.\/.*$ ***!
+  \***************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var map = {
+	"./godzilla-vs-kong-et00122511-16-06-2021-12-47-29.jpg": "./public/uploads/godzilla-vs-kong-et00122511-16-06-2021-12-47-29.jpg",
+	"./jumanji-the-next-level-et00077156-22-10-2020-06-15-23.jpg": "./public/uploads/jumanji-the-next-level-et00077156-22-10-2020-06-15-23.jpg",
+	"./mumbai-saga-et00105043-16-03-2021-02-46-48.jpg": "./public/uploads/mumbai-saga-et00105043-16-03-2021-02-46-48.jpg",
+	"./tom-and-jerry-et00300988-17-05-2021-11-36-56.jpg": "./public/uploads/tom-and-jerry-et00300988-17-05-2021-11-36-56.jpg",
+	"./zack-snyder-s-justice-league-et00047164-10-04-2021-03-22-49.jpg": "./public/uploads/zack-snyder-s-justice-league-et00047164-10-04-2021-03-22-49.jpg"
+};
+
+
+function webpackContext(req) {
+	var id = webpackContextResolve(req);
+	return __webpack_require__(id);
+}
+function webpackContextResolve(req) {
+	if(!__webpack_require__.o(map, req)) {
+		var e = new Error("Cannot find module '" + req + "'");
+		e.code = 'MODULE_NOT_FOUND';
+		throw e;
+	}
+	return map[req];
+}
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = "./public/uploads sync recursive ^\\.\\/.*$";
 
 /***/ })
 
