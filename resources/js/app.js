@@ -50,13 +50,6 @@ const routes = [
         },
     },
     {
-        path: '/home',
-        component: require('./components/Admin/Home.vue').default,
-        meta: {
-            requiresAuth: true
-        },
-    },
-    {
         path: '/addmovie',
         component: require('./components/Admin/Addmovie.vue').default,
         meta: {
@@ -73,6 +66,27 @@ const routes = [
     {
         path: '/viewdata/:id',
         component: require('./components/Admin/viewdetail.vue').default,
+        meta: {
+            requiresAuth: true
+        },
+    },
+    {
+        path: '/user/home',
+        component: require('./components/User/Home.vue').default,
+        meta: {
+            requiresAuth: true
+        },
+    },
+    {
+        path: '/user/viewdetails/:id',
+        component: require('./components/User/ViewDetails.vue').default,
+        meta: {
+            requiresAuth: true
+        },
+    },
+    {
+        path: '/user/book',
+        component: require('./components/User/BookTicket.vue').default,
         meta: {
             requiresAuth: true
         },

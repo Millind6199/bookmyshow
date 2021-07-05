@@ -52,13 +52,18 @@ class LoginController extends Controller
                 $response['status'] = 'success';
                 $response['isAdmin'] = 'true';
                 $response['message'] = 'Admin login Successfully';
-                $response['data'] =$data ;
+                $response['data'] = $data;
                 $response['token'] = $data->createToken('Api token')->accessToken;
-
                 return $response;
 
             } else {
-                return response()->json(['error' => 'Unauthorised'], 401);
+
+                $response['status'] = 'success';
+                $response['isAdmin'] = 'false';
+                $response['message'] = 'User login Successfully';
+                $response['data'] = $data;
+                $response['token'] = $data->createToken('Api token')->accessToken;
+                return $response;
 
 
             }

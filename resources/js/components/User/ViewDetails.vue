@@ -1,21 +1,18 @@
 <template>
     <div>
-        <index/>
+        <User_Side_Bar/>
         <div class="row">
             <div class="col-2">
-                <Sidebar/>
+
 
             </div>
-            <div class="col-9 mt-5" >
-                <div class="dark" >
+            <div class="col-9 mt-5">
+                <div class="dark">
                     <main class="container py-4">
                         <div class="h1 text-center" id="pageHeaderTitle">Movie</div>
                         <article class="postcard dark blue" :style="inlineStyle">
-                            <a class="postcard__img_link" href="#">
-                                <img class="postcard__img" :src="/uploads/+movie_detail.image" alt="Image Title" />
-                            </a>
                             <div class="postcard__text">
-                                <h1 class="postcard__title blue"><a href="#">{{movie_detail.name}}</a></h1>
+                                <h1 class="postcard__title blue" ><a href="#">{{movie_detail.name}}</a></h1>
                                 <div class="postcard__subtitle small">
                                     <time datetime="2020-05-25 12:00:00">
                                         <i class="fas fa-calendar-alt mr-2"></i>Release
@@ -27,11 +24,15 @@
                                 <div class="postcard__preview-txt"><strong>Casts:</strong> {{movie_detail.casts}}</div><br>
                                 <div class="postcard__preview-txt uppercase">{{movie_detail.screen}}</div><br>
                                 <div class="postcard__preview-txt uppercase">{{movie_detail.lang}}</div><br>
-                                <div
-                                    style="float:right"><button class="btn btn-light" v-on:click="back">Back
-                                </button></div>
+                                <div style="float:right">
+                                    <button class="btn btn-light" v-on:click="back">
+                                        Back </button>
+                                    <button class="btn btn-success" v-on:click="bookticket">
+                                        Book Ticket</button>
+                                </div>
                             </div>
                         </article>
+
 
                     </main>
                 </div>
@@ -41,24 +42,18 @@
             </div>
 
         </div>
-        <Footer/>
-
     </div>
 </template>
 
 <script>
-import index from '../index';
-import Sidebar from "../Sidebar";
-import Footer from "../Footer";
+import User_Side_Bar from "../User_Side_Bar";
 export default {
-    name: "viewdetail",
+    name: "ViewDetails",
     props: {
         backgroundImage:String,
     },
     components:{
-        index,
-        Sidebar,
-        Footer
+      User_Side_Bar
     },
     data(){
         return{
@@ -78,26 +73,30 @@ export default {
             })
         },
         back(){
-          this.$router.push('/viewdata')
+            this.$router.push('/user/home')
         },
+
+        bookticket(){
+            this.$router.push('/user/book')
+        },
+
 
     },
     computed: {
         bgImage () {
-            return 'uploads/'+ this.movie_detail.image
-        },
+            return 'uploads/'+this.movie_detail.image
+            },
         inlineStyle () {
             return {
                 backgroundImage: `url(${this.bgImage})`,
                 opacity:0.8,
-                width:'100%',
 
             }
         }
     },
 
     mounted(){
-      this.viewdetail()
+        this.viewdetail()
     },
 
 }

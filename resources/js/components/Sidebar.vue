@@ -9,10 +9,11 @@
 
             <h3 class="w3-bar-item"> <i class="fas fa-bars"></i> Menu</h3>
 
-
-            <span><router-link to="/dashboard" class="nav-link">Dashboard</router-link></span><br>
-            <router-link to="/addmovie" class="nav-link">Add Movie</router-link><br>
-            <router-link to="/viewdata" class="nav-link">View Movies</router-link><br>
+            <div class="nav-link">
+                <span><router-link to="/user/home">Home</router-link></span><br>
+                <router-link to="/addmovie" >Add Movie</router-link><br>
+                <router-link to="/viewdata" >View Movies</router-link><br>
+            </div>
         </div>
 
     </div>

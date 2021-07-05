@@ -52,7 +52,7 @@ export default {
             // alert('hi')
           axios.post('/api/login',this.items).then((result)=>{
 
-              if(result.data.status == 'success') {
+              if(result.data.isAdmin == 'true') {
                   alert(result.data.message)
                   this.seen = true
                   this.data = result.data.data
@@ -63,6 +63,12 @@ export default {
               else
               {
                   alert(result.data.message)
+                  this.seen = true
+                  this.data = result.data.data
+                  localStorage.setItem('isAuth', true)
+                  localStorage.setItem('token', result.data.token)
+                  this.$router.push('/user/home')
+
               }
               })
         },
