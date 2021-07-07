@@ -7,10 +7,11 @@
 
             </div>
             <div class="col-6 mt-5">
-                <form @submit.prevent="StoreData" method="post" enctype="multipart/form-data">
+                <form @submit.prevent="UpdateData(movie_detail.id)" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="movie">Movie Name</label>
-                        <input type="text" class="form-control" id="movie" v-model="items.name" required>
+                        <input type="text" class="form-control" id="movie" v-model="items.name"
+                             value="movie_detail.name"  required>
                     </div>
                     <div class="form-group">
                         <label for="movie_ov">OverView</label>
@@ -84,72 +85,94 @@ import Sidebar from "../Sidebar";
 import Footer from "../Footer";
 import axios from "axios";
 
+
 export default {
-    name: "Addmovie",
+    name: "EditData",
     components:{
         index,
         Sidebar,
         Footer
     },
     data(){
-        return{
-            items:{
-              name:null,
-              overview:null,
+      return{
+          seen:false,
+          items:{
+              name:'',
+              overview:'',
               casts:null,
               runtime:null,
               release_year:null,
-                image:null,
-                lang:[],
-                screen:[],
-                category:[],
-            },
-            seen:false,
-            category_list:'',
-        }
+              image:null,
+              lang:[],
+              screen:[],
+              category:[],
+          },
+          category_list:'',
+          movie_detail:[],
+      }
     },
     methods:{
-        handleFileUpload(event) {
+        handleFileUpload(   ) {
             this.items.image = this.$refs.file.files[0];
         },
-      StoreData(e){
-          let data = new FormData();
-          data.append('name', this.items.name);
-          data.append('overview', this.items.overview);
-          data.append('image', this.items.image);
-          data.append('casts', this.items.casts);
-          data.append('runtime', this.items.runtime);
-          data.append('release_year', this.items.release_year);
-          data.append('lang', this.items.lang);
-          data.append('screen', this.items.screen);
-          data.append('category', this.items.category);
-        axios.post('/api/addmovie',data, {
-            headers : {
-                'Authorization' : `Bearer ${localStorage.getItem('token')}`
-            }
-          }).then((result)=>{
-            this.seen = true
-            this.$router.push('/viewdata')
-          })
-          e.preventDefault()
-      },
-      ShowCategory(){
-          axios.get('/api/categories', {
-              headers : {
-                  'Authorization' : `Bearer ${localStorage.getItem('token')}`
-              }
-          }).then(cat => {
-              // console.warn('view', cat)
-              this.category_list = cat.data.category
-          })
-      },
+        UpdateData(id){
+            let data = new FormData();
+            data.append('name', this.items.name);
+            data.append('overview', this.items.overview);
+            data.append('image', this.items.image);
+            data.append('casts', this.items.casts);
+            data.append('runtime', this.items.runtime);
+            data.append('release_year', this.items.release_year);
+            data.append('lang', this.items.lang);
+            data.append('screen', this.items.screen);
+            data.append('category', this.items.category);
 
+            axios.post('/api/edit/'+id,data,{
+                headers : {
+                    'Authorization' : `Bearer ${localStorage.getItem('token')}`
+                }
+            }).then((result)=>{
+                // console.warn('updated',result)
+                this.$router.push('/viewdata')
+            })
+        },
+        EditData(){
+            axios.get('/api/viewdata/' + this.$route.params.id , {
+                headers : {
+                    'Authorization' : `Bearer ${localStorage.getItem('token')}`
+                }
+            }).then(view2 => {
+                 console.warn('Edit', view2)
+                this.movie_detail = view2.data.data
+                this.items.name=this.movie_detail.name
+                this.items.overview = this.movie_detail.overview
+                this.items.casts = this.movie_detail.casts
+                this.items.runtime=this.movie_detail.runtime
+                this.items.release_year=this.movie_detail.release_year
+
+            })
+        },
+        setValue(){
+
+
+        },
+        ShowCategory(){
+            axios.get('/api/categories', {
+                headers : {
+                    'Authorization' : `Bearer ${localStorage.getItem('token')}`
+                }
+            }).then(cat => {
+                // console.warn('view', cat)
+                this.category_list = cat.data.category
+            })
+        },
     },
     mounted(){
+        // let apurl = process.env.MIX_API_URL;
+        // console.log(apurl, 'jjjj')
+        this.EditData()
         this.ShowCategory()
-    },
-
-
+    }
 }
 </script>
 

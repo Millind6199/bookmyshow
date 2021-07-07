@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MovieTicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,12 +21,13 @@ use App\Http\Controllers\CategoryController;
 Route::apiResource('/login' , 'Auth\LoginController');
 Route::apiResource('/signup' , 'Auth\RegisterController');
 
-Route::post('/addmovie' ,[MovieController::class,'store']);
-Route::get('/viewdata' ,[MovieController::class,'show']);
-Route::get('/viewdata/{id}' ,[MovieController::class,'showById']);
-Route::delete('/deletedata/{id}',[MovieController::class , 'destroy']);
+Route::post('/addmovie' ,[MovieController::class,'store'])->middleware('auth:api');
+Route::get('/viewdata' ,[MovieController::class,'show'])->middleware('auth:api');
+Route::get('/viewdata/{id}' ,[MovieController::class,'showById'])->middleware('auth:api');
+Route::delete('/deletedata/{id}',[MovieController::class , 'destroy'])->middleware('auth:api');
+Route::post('/edit/{id}',[MovieController::class,'update'])->middleware('auth:api');
 
-Route::get('/categories' ,[CategoryController::class,'show']);
-
+Route::get('/categories' ,[CategoryController::class,'show'])->middleware('auth:api');
+Route::post('/booking/{id}',[MovieTicketController::class,'store'] )->middleware('auth:api');
 
 //Route::post('/login' , [LoginController::class,'store']);

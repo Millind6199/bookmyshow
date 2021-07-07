@@ -25,4 +25,7 @@ class Movie extends Model
     {
         return asset('uploads/'.$value);
     }
+    public function category(){
+        return $this->hasOne(MovieCategory::class);
+    }
 }

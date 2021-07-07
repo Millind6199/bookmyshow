@@ -27,7 +27,7 @@
                                 <div style="float:right">
                                     <button class="btn btn-light" v-on:click="back">
                                         Back </button>
-                                    <button class="btn btn-success" v-on:click="bookticket">
+                                    <button class="btn btn-success" v-on:click="bookticket(movie_detail.id)">
                                         Book Ticket</button>
                                 </div>
                             </div>
@@ -63,21 +63,21 @@ export default {
     methods:{
         viewdetail(){
 
-            axios.get('/api/viewdata/' + this.$route.params.id , {
-                headers : {
-                    'Authorization' : `Bearer ${localStorage.getItem('token')}`
-                }
-            }).then(view2 => {
-                // console.warn('view', view2)
-                this.movie_detail = view2.data.data
-            })
+                axios.get('/api/viewdata/' + this.$route.params.id , {
+                    headers : {
+                        'Authorization' : `Bearer ${localStorage.getItem('token')}`
+                    }
+                }).then(view2 => {
+                    // console.warn('view', view2)
+                    this.movie_detail = view2.data.data
+                })
         },
         back(){
             this.$router.push('/user/home')
         },
 
-        bookticket(){
-            this.$router.push('/user/book')
+        bookticket(id){
+            this.$router.push('/user/book/'+id)
         },
 
 
@@ -90,6 +90,9 @@ export default {
             return {
                 backgroundImage: `url(${this.bgImage})`,
                 opacity:0.8,
+                BackgroundSize: '100% 100%',
+
+
 
             }
         }
@@ -148,13 +151,16 @@ a, a:hover {
 .postcard {
     flex-wrap: wrap;
     display: flex;
-
+    width: 800px;
+    height: 500px;
     box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
     border-radius: 10px;
     margin: 0 0 2rem 0;
     overflow: hidden;
     position: relative;
     color: #ffffff;
+}
+
 
 &.dark {
      background-color: #18151f;
@@ -236,12 +242,11 @@ h1,	.h1 {
     cursor: default;
     user-select: none;
     transition: background-color 0.3s;
-
+}
 &:hover {
      background: rgba(83, 83, 83, 0.8);
  }
-}
-}
+
 
 &:before {
      content: "";

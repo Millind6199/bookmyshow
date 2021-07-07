@@ -42,8 +42,8 @@
                          :key="data.id">
                         <div class="card text-white card-has-bg click-col"
                              v-on:click="getticket(data.id)"
-                                    style="background-image: url('uploads/mumbai-saga-et00105043-16-03-2021-02-46-48.jpg')">
-                        <img class="card-img d-none" :src="/uploads/+data.image">
+                                    :style="bgDImage(data.image)">
+                        <img class="card-img " :src="/uploads/+data.image">
                         <div class="card-img-overlay d-flex flex-column">
                             <div class="card-body">
 <!--                                <small class="card-meta mb-2">{{data.name}}</small>-->
@@ -101,7 +101,15 @@ export default {
         },
         getticket(id){
             this.$router.push('/user/viewdetails/'+id)
-        }
+        },
+        bgDImage (image) {
+            console.log(image)
+            return {
+                backgroundImage: `url(uploads+''${image})`,
+                opacity:0.8,
+                width:'100%',
+            }
+        },
 
 
     },

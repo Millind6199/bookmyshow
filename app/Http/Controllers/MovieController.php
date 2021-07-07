@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
+use App\Models\MovieCategory;
 use Illuminate\Http\Request;
 use phpseclib3\System\SSH\Agent\Identity;
 
@@ -49,10 +50,16 @@ class MovieController extends Controller
             'release_year' => $request->release_year,
             'lang' => $request->lang,
             'screen' => $request->screen,
-            'cat_id' => $request->category,
 
         ]);
 
+        $categories = explode(',' , $request->category);
+            foreach( $categories as $cat ){
+                MovieCategory::create([
+                   'fkmovie_id'=>$data->id,
+                   'fkcat_id' => $cat
+                ]);
+            }
         $response['status'] = "success";
         $response['massage'] = "Data inserted successfully";
         $response['data'] = $data;
@@ -69,7 +76,7 @@ class MovieController extends Controller
     public function show()
     {
         $data = Movie::get();
-//        dd($data);
+
 
         $response['status'] = "success";
         $response['massage'] = "Data inserted successfully";
@@ -97,9 +104,40 @@ class MovieController extends Controller
      * @param  \App\Models\Movie  $movie
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Movie $movie)
+    public function update(Request $request, Movie $movie ,$id)
     {
-        //
+//        dd($request->all());
+        $request->file('image')->move('uploads/',$request->file('image')->getClientOriginalName());
+
+        $data = Movie::where('id',$id)->update(
+            [
+                'name' => $request->name,
+                'overview' => $request->overview,
+                'image' => $request->file('image')->getClientOriginalName(),
+                'casts' => $request->casts,
+                'runtime' => $request->runtime,
+                'release_year' => $request->release_year,
+                'lang' => $request->lang,
+                'screen' => $request->screen,
+            ]);
+        MovieCategory::where('fkmovie_id',$id)->delete();
+
+        $categories = explode(',',$request->category);
+        foreach( $categories as $cat ){
+            MovieCategory::create([
+                'fkmovie_id'=>$id,
+                'fkcat_id' => $cat
+            ]);
+        }
+
+        $response['status'] = "success";
+        $response['massage'] = "Data inserted successfully";
+        $response['data'] = $data;
+
+        return $response;
+
+
+
     }
 
     /**
@@ -111,7 +149,9 @@ class MovieController extends Controller
     public function destroy($id)
 
     {
+
         Movie::destroy($id);
+        MovieCategory::where('fkmovie_id', $id)->delete();
 
         $response['status'] = 'success';
         $response['massage'] = 'Data Deleted';

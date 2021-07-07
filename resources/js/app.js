@@ -71,6 +71,14 @@ const routes = [
         },
     },
     {
+        path: '/edit/:id',
+        component: require('./components/Admin/EditData.vue').default,
+        meta: {
+            requiresAuth: true
+        },
+    },
+
+    {
         path: '/user/home',
         component: require('./components/User/Home.vue').default,
         meta: {
@@ -85,7 +93,7 @@ const routes = [
         },
     },
     {
-        path: '/user/book',
+        path: '/user/book/:id',
         component: require('./components/User/BookTicket.vue').default,
         meta: {
             requiresAuth: true

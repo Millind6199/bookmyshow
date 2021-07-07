@@ -10,9 +10,9 @@
                 <div class="dark" >
                     <main class="container py-4">
                         <div class="h1 text-center" id="pageHeaderTitle">Movie</div>
-                        <article class="postcard dark blue" :style="inlineStyle">
+                        <article class="postcard dark" :style="inlineStyle">
                             <a class="postcard__img_link" href="#">
-                                <img class="postcard__img" :src="/uploads/+movie_detail.image" alt="Image Title" />
+<!--                                <img class="postcard__img" :src="/uploads/+movie_detail.image" alt="Image Title" />-->
                             </a>
                             <div class="postcard__text">
                                 <h1 class="postcard__title blue"><a href="#">{{movie_detail.name}}</a></h1>
@@ -89,8 +89,12 @@ export default {
         inlineStyle () {
             return {
                 backgroundImage: `url(${this.bgImage})`,
+                // backgroundImage: ` linear-gradient(90deg, rgb(34, 34, 34) 24.97%, rgb(34, 34, 34) 38.3%, rgba(34, 34, 34, 0.04) 97.47%, rgb(34, 34, 34) 100%), url(${this.bgImage})`,
                 opacity:0.8,
                 width:'100%',
+                BackgroundSize: '100% 100%',
+
+
 
             }
         }
@@ -123,7 +127,6 @@ body {
     text-rendering: optimizeLegibility;
     font-weight: initial;
 }
-
 .dark {
     background: #1a202c;
 }

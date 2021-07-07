@@ -7,7 +7,7 @@
 
             </div>
             <div class="col-9 mt-5" >
-                <table class="table table-hover">
+                <table class="table table-hover rounded">
                     <thead>
                     <tr>
 
@@ -38,6 +38,12 @@
                                     v-on:click="DeleteData(data.id)">
                                 <i class="fas fa-trash"></i></button>
                         </td>
+                        <td>
+                            <button class="btn btn-warning" data-toggle="modal" data-target="#exampleModal"
+                                    v-on:click="UpdateData(data.id)">
+                                <i class="far fa-edit"></i></button>
+                        </td>
+
 
                     </tr>
                     </tbody>
@@ -96,6 +102,9 @@ export default {
                 this.Viewdata()
             })
 
+        },
+        UpdateData(id){
+                this.$router.push('/edit/'+id)
         },
     },
 
