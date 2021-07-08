@@ -16,17 +16,17 @@
                     <input type="date" class="form-control" name="showDate" id="date" v-model="showDate" required>
                     <br><br><br><br>
                     <div v-for="n in 10">
-                       <input type="checkbox" class="big-checkbox estado_cat"  :value='"A"+n' v-model="seat">
-                       <input type="checkbox" class="big-checkbox"  :value='"B"+n' v-model="seat">
-                       <input type="checkbox" class="big-checkbox" :value='"C"+n' v-model="seat">
-                       <input type="checkbox" class="big-checkbox"  :value='"D"+n' v-model="seat">
-                       <input type="checkbox" class="big-checkbox"  :value='"E"+n' v-model="seat">
+                     <input type="checkbox" class="big-checkbox"  :value='"A"+n' v-model="selectedSeat"
+                            @click="check($event)">
+                       <input type="checkbox" class="big-checkbox"  :value='"B"+n' v-model="selectedSeat" @click="check($event)">
+                       <input type="checkbox" class="big-checkbox" :value='"C"+n' v-model="selectedSeat" @click="check($event)">
+                       <input type="checkbox" class="big-checkbox"  :value='"D"+n' v-model="selectedSeat" @click="check($event)">
+                       <input type="checkbox" class="big-checkbox"  :value='"E"+n' v-model="selectedSeat" @click="check($event)">
 
 
                     </div><br><br>
                     <div style="margin-bottom: 100px">
                         <button type="submit" class="btn btn-outline-success form-control">Book</button>
-
                     </div>
                 </form>
             </div>
@@ -49,6 +49,8 @@ export default {
             seat:[],
             qty:'',
             showDate:'',
+            selectedSeat:[],
+            isChecked: true,
 
 
         }
@@ -67,7 +69,7 @@ export default {
         },
         BookTicket(id){
             let data = new FormData();
-            data.append('seat', this.seat);
+            data.append('seat', this.selectedSeat);
             data.append('qty', this.qty);
             data.append('showDate', this.showDate);
 
@@ -80,15 +82,25 @@ export default {
             })
 
         },
-        checked(){
-            $(".estado_cat").prop( "checked", true );
+      getBookedSeat(){
+            axios.get('/api/bookedticket/'+ this.$route.params.id,{
+                headers : {
+                    'Authorization' : `Bearer ${localStorage.getItem('token')}`
+                }
+            }).then(resp =>{
+                // console.warn('resp',resp)
+                this.selectedSeat = resp.data.ticket
+
+            })
+      },
+        check: function(e) {
+            if (e.target.checked) {
+                console.log(e.target.value)
+            }
         }
 
 
     },
-
-
-
     mounted() {
         var today = new Date();
         var dd = today.getDate();
@@ -104,6 +116,7 @@ export default {
         $("#date").attr("min", today);
 
         this.showdata()
+        this.getBookedSeat()
     }
 
 
@@ -115,5 +128,9 @@ img{
     width:900px;
     height: 500px;
 }
-.big-checkbox {width: 30px; height: 30px;}
+.big-checkbox
+{
+    width: 30px;
+    height: 30px;
+}
 </style>

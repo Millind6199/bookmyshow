@@ -64,7 +64,8 @@ class MovieTicketController extends Controller
      */
     public function show(MovieTicket $movieTicket)
     {
-        
+        $data = MovieTicket::all();
+
     }
 
     /**
@@ -99,5 +100,15 @@ class MovieTicketController extends Controller
     public function destroy(MovieTicket $movieTicket)
     {
         //
+    }
+    public function getAllBookedSeats($id)
+    {
+       $ticket = MovieTicket::where('fkmovie_id',$id)->pluck('no');
+
+        $response['status'] = "success";
+        $response['massage'] = "Get Data successfully";
+       $response['ticket'] = $ticket;
+
+        return $response;
     }
 }

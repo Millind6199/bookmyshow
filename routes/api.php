@@ -28,6 +28,7 @@ Route::delete('/deletedata/{id}',[MovieController::class , 'destroy'])->middlewa
 Route::post('/edit/{id}',[MovieController::class,'update'])->middleware('auth:api');
 
 Route::get('/categories' ,[CategoryController::class,'show'])->middleware('auth:api');
-Route::post('/booking/{id}',[MovieTicketController::class,'store'] )->middleware('auth:api');
 
+Route::post('/booking/{id}',[MovieTicketController::class,'store'] )->middleware('auth:api');
+Route::get('/bookedticket/{id}',[MovieTicketController::class,'getAllBookedSeats'])->middleware('auth:api');
 //Route::post('/login' , [LoginController::class,'store']);

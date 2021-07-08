@@ -27,6 +27,7 @@ Vue.use(VueRouter)
 // Vue.component('Login', require('./components/Login.vue').default);
 
 const routes = [
+    //ADMIN SIDE
         {
         path: '/',
         component: require('./components/Login.vue').default,
@@ -78,6 +79,7 @@ const routes = [
         },
     },
 
+    //USER SIDE
     {
         path: '/user/home',
         component: require('./components/User/Home.vue').default,
@@ -95,6 +97,13 @@ const routes = [
     {
         path: '/user/book/:id',
         component: require('./components/User/BookTicket.vue').default,
+        meta: {
+            requiresAuth: true
+        },
+    },
+    {
+        path: '/user/mybookedticket',
+        component: require('./components/User/MyBookedTicket.vue').default,
         meta: {
             requiresAuth: true
         },

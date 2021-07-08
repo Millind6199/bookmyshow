@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use App\Models\MovieCategory;
+use App\Models\MovieTicket;
 use Illuminate\Http\Request;
 use phpseclib3\System\SSH\Agent\Identity;
 
@@ -52,6 +53,8 @@ class MovieController extends Controller
             'screen' => $request->screen,
 
         ]);
+
+
 
         $categories = explode(',' , $request->category);
             foreach( $categories as $cat ){
@@ -163,6 +166,7 @@ class MovieController extends Controller
     public function showById($id)
     {
         $data = Movie::where('id',$id)->first();
+
 
 
         $response['status'] = "success";

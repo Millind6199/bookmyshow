@@ -2709,7 +2709,9 @@ __webpack_require__.r(__webpack_exports__);
       screen: '',
       seat: [],
       qty: '',
-      showDate: ''
+      showDate: '',
+      selectedSeat: [],
+      isChecked: true
     };
   },
   methods: {
@@ -2727,7 +2729,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     BookTicket: function BookTicket(id) {
       var data = new FormData();
-      data.append('seat', this.seat);
+      data.append('seat', this.selectedSeat);
       data.append('qty', this.qty);
       data.append('showDate', this.showDate);
       axios.post('/api/booking/' + id, data, {
@@ -2738,8 +2740,22 @@ __webpack_require__.r(__webpack_exports__);
         console.warn('result', result);
       });
     },
-    checked: function checked() {
-      $(".estado_cat").prop("checked", true);
+    getBookedSeat: function getBookedSeat() {
+      var _this2 = this;
+
+      axios.get('/api/bookedticket/' + this.$route.params.id, {
+        headers: {
+          'Authorization': "Bearer ".concat(localStorage.getItem('token'))
+        }
+      }).then(function (resp) {
+        // console.warn('resp',resp)
+        _this2.selectedSeat = resp.data.ticket;
+      });
+    },
+    check: function check(e) {
+      if (e.target.checked) {
+        console.log(e.target.value);
+      }
     }
   },
   mounted: function mounted() {
@@ -2760,6 +2776,7 @@ __webpack_require__.r(__webpack_exports__);
     today = yyyy + '-' + mm + '-' + dd;
     $("#date").attr("min", today);
     this.showdata();
+    this.getBookedSeat();
   }
 });
 
@@ -2899,6 +2916,35 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.Viewdata();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyBookedTicket.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyBookedTicket.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _User_Side_Bar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../User_Side_Bar */ "./resources/js/components/User_Side_Bar.vue");
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "MyBookedTicket",
+  components: {
+    User_Side_Bar: _User_Side_Bar__WEBPACK_IMPORTED_MODULE_0__.default
   }
 });
 
@@ -3256,7 +3302,8 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vue_router__WEBPACK_IMPORTED_MODULE
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 // Vue.component('Login', require('./components/Login.vue').default);
 
-var routes = [{
+var routes = [//ADMIN SIDE
+{
   path: '/',
   component: __webpack_require__(/*! ./components/Login.vue */ "./resources/js/components/Login.vue").default,
   meta: {
@@ -3298,7 +3345,8 @@ var routes = [{
   meta: {
     requiresAuth: true
   }
-}, {
+}, //USER SIDE
+{
   path: '/user/home',
   component: __webpack_require__(/*! ./components/User/Home.vue */ "./resources/js/components/User/Home.vue").default,
   meta: {
@@ -3313,6 +3361,12 @@ var routes = [{
 }, {
   path: '/user/book/:id',
   component: __webpack_require__(/*! ./components/User/BookTicket.vue */ "./resources/js/components/User/BookTicket.vue").default,
+  meta: {
+    requiresAuth: true
+  }
+}, {
+  path: '/user/mybookedticket',
+  component: __webpack_require__(/*! ./components/User/MyBookedTicket.vue */ "./resources/js/components/User/MyBookedTicket.vue").default,
   meta: {
     requiresAuth: true
   }
@@ -7948,7 +8002,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nimg[data-v-27d367c4]{\n    width:900px;\n    height: 500px;\n}\n.big-checkbox[data-v-27d367c4] {width: 30px; height: 30px;}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nimg[data-v-27d367c4]{\n    width:900px;\n    height: 500px;\n}\n.big-checkbox[data-v-27d367c4]\n{\n    width: 30px;\n    height: 30px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -39967,6 +40021,45 @@ component.options.__file = "resources/js/components/User/Home.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/User/MyBookedTicket.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/User/MyBookedTicket.vue ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _MyBookedTicket_vue_vue_type_template_id_9d0c5dee_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MyBookedTicket.vue?vue&type=template&id=9d0c5dee&scoped=true& */ "./resources/js/components/User/MyBookedTicket.vue?vue&type=template&id=9d0c5dee&scoped=true&");
+/* harmony import */ var _MyBookedTicket_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MyBookedTicket.vue?vue&type=script&lang=js& */ "./resources/js/components/User/MyBookedTicket.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _MyBookedTicket_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _MyBookedTicket_vue_vue_type_template_id_9d0c5dee_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _MyBookedTicket_vue_vue_type_template_id_9d0c5dee_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "9d0c5dee",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/User/MyBookedTicket.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/User/Signup.vue":
 /*!*************************************************!*\
   !*** ./resources/js/components/User/Signup.vue ***!
@@ -40284,6 +40377,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Home.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/Home.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/components/User/MyBookedTicket.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/User/MyBookedTicket.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MyBookedTicket_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MyBookedTicket.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyBookedTicket.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MyBookedTicket_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -40621,6 +40730,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_template_id_4ac90568_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_template_id_4ac90568_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Home.vue?vue&type=template&id=4ac90568&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/Home.vue?vue&type=template&id=4ac90568&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/User/MyBookedTicket.vue?vue&type=template&id=9d0c5dee&scoped=true&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/User/MyBookedTicket.vue?vue&type=template&id=9d0c5dee&scoped=true& ***!
+  \****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MyBookedTicket_vue_vue_type_template_id_9d0c5dee_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MyBookedTicket_vue_vue_type_template_id_9d0c5dee_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MyBookedTicket_vue_vue_type_template_id_9d0c5dee_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MyBookedTicket.vue?vue&type=template&id=9d0c5dee&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyBookedTicket.vue?vue&type=template&id=9d0c5dee&scoped=true&");
 
 
 /***/ }),
@@ -42225,36 +42351,39 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.seat,
-                          expression: "seat"
+                          value: _vm.selectedSeat,
+                          expression: "selectedSeat"
                         }
                       ],
-                      staticClass: "big-checkbox estado_cat",
+                      staticClass: "big-checkbox",
                       attrs: { type: "checkbox" },
                       domProps: {
                         value: "A" + n,
-                        checked: Array.isArray(_vm.seat)
-                          ? _vm._i(_vm.seat, "A" + n) > -1
-                          : _vm.seat
+                        checked: Array.isArray(_vm.selectedSeat)
+                          ? _vm._i(_vm.selectedSeat, "A" + n) > -1
+                          : _vm.selectedSeat
                       },
                       on: {
+                        click: function($event) {
+                          return _vm.check($event)
+                        },
                         change: function($event) {
-                          var $$a = _vm.seat,
+                          var $$a = _vm.selectedSeat,
                             $$el = $event.target,
                             $$c = $$el.checked ? true : false
                           if (Array.isArray($$a)) {
                             var $$v = "A" + n,
                               $$i = _vm._i($$a, $$v)
                             if ($$el.checked) {
-                              $$i < 0 && (_vm.seat = $$a.concat([$$v]))
+                              $$i < 0 && (_vm.selectedSeat = $$a.concat([$$v]))
                             } else {
                               $$i > -1 &&
-                                (_vm.seat = $$a
+                                (_vm.selectedSeat = $$a
                                   .slice(0, $$i)
                                   .concat($$a.slice($$i + 1)))
                             }
                           } else {
-                            _vm.seat = $$c
+                            _vm.selectedSeat = $$c
                           }
                         }
                       }
@@ -42265,36 +42394,39 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.seat,
-                          expression: "seat"
+                          value: _vm.selectedSeat,
+                          expression: "selectedSeat"
                         }
                       ],
                       staticClass: "big-checkbox",
                       attrs: { type: "checkbox" },
                       domProps: {
                         value: "B" + n,
-                        checked: Array.isArray(_vm.seat)
-                          ? _vm._i(_vm.seat, "B" + n) > -1
-                          : _vm.seat
+                        checked: Array.isArray(_vm.selectedSeat)
+                          ? _vm._i(_vm.selectedSeat, "B" + n) > -1
+                          : _vm.selectedSeat
                       },
                       on: {
+                        click: function($event) {
+                          return _vm.check($event)
+                        },
                         change: function($event) {
-                          var $$a = _vm.seat,
+                          var $$a = _vm.selectedSeat,
                             $$el = $event.target,
                             $$c = $$el.checked ? true : false
                           if (Array.isArray($$a)) {
                             var $$v = "B" + n,
                               $$i = _vm._i($$a, $$v)
                             if ($$el.checked) {
-                              $$i < 0 && (_vm.seat = $$a.concat([$$v]))
+                              $$i < 0 && (_vm.selectedSeat = $$a.concat([$$v]))
                             } else {
                               $$i > -1 &&
-                                (_vm.seat = $$a
+                                (_vm.selectedSeat = $$a
                                   .slice(0, $$i)
                                   .concat($$a.slice($$i + 1)))
                             }
                           } else {
-                            _vm.seat = $$c
+                            _vm.selectedSeat = $$c
                           }
                         }
                       }
@@ -42305,36 +42437,39 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.seat,
-                          expression: "seat"
+                          value: _vm.selectedSeat,
+                          expression: "selectedSeat"
                         }
                       ],
                       staticClass: "big-checkbox",
                       attrs: { type: "checkbox" },
                       domProps: {
                         value: "C" + n,
-                        checked: Array.isArray(_vm.seat)
-                          ? _vm._i(_vm.seat, "C" + n) > -1
-                          : _vm.seat
+                        checked: Array.isArray(_vm.selectedSeat)
+                          ? _vm._i(_vm.selectedSeat, "C" + n) > -1
+                          : _vm.selectedSeat
                       },
                       on: {
+                        click: function($event) {
+                          return _vm.check($event)
+                        },
                         change: function($event) {
-                          var $$a = _vm.seat,
+                          var $$a = _vm.selectedSeat,
                             $$el = $event.target,
                             $$c = $$el.checked ? true : false
                           if (Array.isArray($$a)) {
                             var $$v = "C" + n,
                               $$i = _vm._i($$a, $$v)
                             if ($$el.checked) {
-                              $$i < 0 && (_vm.seat = $$a.concat([$$v]))
+                              $$i < 0 && (_vm.selectedSeat = $$a.concat([$$v]))
                             } else {
                               $$i > -1 &&
-                                (_vm.seat = $$a
+                                (_vm.selectedSeat = $$a
                                   .slice(0, $$i)
                                   .concat($$a.slice($$i + 1)))
                             }
                           } else {
-                            _vm.seat = $$c
+                            _vm.selectedSeat = $$c
                           }
                         }
                       }
@@ -42345,36 +42480,39 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.seat,
-                          expression: "seat"
+                          value: _vm.selectedSeat,
+                          expression: "selectedSeat"
                         }
                       ],
                       staticClass: "big-checkbox",
                       attrs: { type: "checkbox" },
                       domProps: {
                         value: "D" + n,
-                        checked: Array.isArray(_vm.seat)
-                          ? _vm._i(_vm.seat, "D" + n) > -1
-                          : _vm.seat
+                        checked: Array.isArray(_vm.selectedSeat)
+                          ? _vm._i(_vm.selectedSeat, "D" + n) > -1
+                          : _vm.selectedSeat
                       },
                       on: {
+                        click: function($event) {
+                          return _vm.check($event)
+                        },
                         change: function($event) {
-                          var $$a = _vm.seat,
+                          var $$a = _vm.selectedSeat,
                             $$el = $event.target,
                             $$c = $$el.checked ? true : false
                           if (Array.isArray($$a)) {
                             var $$v = "D" + n,
                               $$i = _vm._i($$a, $$v)
                             if ($$el.checked) {
-                              $$i < 0 && (_vm.seat = $$a.concat([$$v]))
+                              $$i < 0 && (_vm.selectedSeat = $$a.concat([$$v]))
                             } else {
                               $$i > -1 &&
-                                (_vm.seat = $$a
+                                (_vm.selectedSeat = $$a
                                   .slice(0, $$i)
                                   .concat($$a.slice($$i + 1)))
                             }
                           } else {
-                            _vm.seat = $$c
+                            _vm.selectedSeat = $$c
                           }
                         }
                       }
@@ -42385,36 +42523,39 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.seat,
-                          expression: "seat"
+                          value: _vm.selectedSeat,
+                          expression: "selectedSeat"
                         }
                       ],
                       staticClass: "big-checkbox",
                       attrs: { type: "checkbox" },
                       domProps: {
                         value: "E" + n,
-                        checked: Array.isArray(_vm.seat)
-                          ? _vm._i(_vm.seat, "E" + n) > -1
-                          : _vm.seat
+                        checked: Array.isArray(_vm.selectedSeat)
+                          ? _vm._i(_vm.selectedSeat, "E" + n) > -1
+                          : _vm.selectedSeat
                       },
                       on: {
+                        click: function($event) {
+                          return _vm.check($event)
+                        },
                         change: function($event) {
-                          var $$a = _vm.seat,
+                          var $$a = _vm.selectedSeat,
                             $$el = $event.target,
                             $$c = $$el.checked ? true : false
                           if (Array.isArray($$a)) {
                             var $$v = "E" + n,
                               $$i = _vm._i($$a, $$v)
                             if ($$el.checked) {
-                              $$i < 0 && (_vm.seat = $$a.concat([$$v]))
+                              $$i < 0 && (_vm.selectedSeat = $$a.concat([$$v]))
                             } else {
                               $$i > -1 &&
-                                (_vm.seat = $$a
+                                (_vm.selectedSeat = $$a
                                   .slice(0, $$i)
                                   .concat($$a.slice($$i + 1)))
                             }
                           } else {
-                            _vm.seat = $$c
+                            _vm.selectedSeat = $$c
                           }
                         }
                       }
@@ -42637,6 +42778,31 @@ var render = function() {
     ],
     1
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyBookedTicket.vue?vue&type=template&id=9d0c5dee&scoped=true&":
+/*!*******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyBookedTicket.vue?vue&type=template&id=9d0c5dee&scoped=true& ***!
+  \*******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [_c("User_Side_Bar")], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -43076,7 +43242,7 @@ var staticRenderFns = [
           "a",
           {
             staticClass: "nav-link active",
-            attrs: { "aria-current": "page", href: "#" }
+            attrs: { "aria-current": "page", href: "/#/user/mybookedticket" }
           },
           [_vm._v("My Bookings")]
         )

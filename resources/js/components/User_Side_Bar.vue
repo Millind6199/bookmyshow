@@ -12,7 +12,7 @@
                             <a class="nav-link active" aria-current="page" href="/#/user/home">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">My Bookings</a>
+                            <a class="nav-link active" aria-current="page" href="/#/user/mybookedticket">My Bookings</a>
                         </li>
                         <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">About Us</a>
