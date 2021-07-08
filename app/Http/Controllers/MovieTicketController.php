@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Movie;
 use App\Models\MovieTicket;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -62,10 +63,24 @@ class MovieTicketController extends Controller
      * @param  \App\Models\MovieTicket  $movieTicket
      * @return \Illuminate\Http\Response
      */
-    public function show(MovieTicket $movieTicket)
+    public function show()
     {
-        $data = MovieTicket::all();
+        $user_id = auth()->guard('api')->user()->id;
 
+
+        $tickets = MovieTicket::where('fkuser_id',$user_id)
+            ->join('movies','movies.id','movie_tickets.fkmovie_id')
+            ->select('movies.id','movies.name','movies.image','movies.runtime','movie_tickets.created_at',
+                'movie_tickets.no','movie_tickets.date')
+            ->get();
+
+
+
+        $response['status'] = "success";
+        $response['massage'] = "Get Data successfully";
+        $response['tickets'] = $tickets;
+
+        return $response;
     }
 
     /**

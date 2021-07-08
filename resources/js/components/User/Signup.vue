@@ -59,6 +59,8 @@ name: "Signup",
             {
                 this.seen = true
                 this.data = result.data.data
+                alert(result.data.message)
+                this.$router.push('/')
             }
 
             else {

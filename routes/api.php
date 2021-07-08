@@ -31,4 +31,5 @@ Route::get('/categories' ,[CategoryController::class,'show'])->middleware('auth:
 
 Route::post('/booking/{id}',[MovieTicketController::class,'store'] )->middleware('auth:api');
 Route::get('/bookedticket/{id}',[MovieTicketController::class,'getAllBookedSeats'])->middleware('auth:api');
+Route::get('/bookedtickets',[MovieTicketController::class,'show'])->middleware('auth:api');
 //Route::post('/login' , [LoginController::class,'store']);
