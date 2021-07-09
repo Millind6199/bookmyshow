@@ -22,8 +22,9 @@
                         </li>
                         </ul>
                     <div style="margin-left: 350px">
-                        <form class="d-flex">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <form class="d-flex" @submit.prevent="Search">
+                            <input class="form-control me-2" type="search" v-model="search" placeholder="Search"
+                                   aria-label="Search">
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
                     </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -44,7 +45,8 @@ export default {
     name: "User_Side_Bar",
     data(){
       return{
-          isAuth: ''
+          isAuth: '',
+          str:'',
       }
     },
     methods:{
@@ -57,8 +59,19 @@ export default {
             }
 
         },
-
-
+        Search: function () {
+            if (this.str === "") {
+                this.search();
+            } else {
+                axios.get('/api/search/' + this.str)
+                    .then(response => {
+                        this.movies= response.data
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+            }
+        }
     }
 }
 </script>

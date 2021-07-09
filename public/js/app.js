@@ -2713,7 +2713,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       movie_detail: [],
       screen: '',
-      seat: [],
+      seat: 0,
       qty: '',
       showDate: '',
       selectedSeat: [] // isChecked: true,
@@ -2737,7 +2737,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       var data = new FormData();
-      data.append('seat', this.selectedSeat);
+      var temp = this.selectedSeat;
+      temp.splice(0, this.seat);
+      data.append('seat', temp);
       data.append('qty', this.qty);
       data.append('showDate', this.showDate);
       axios.post('/api/booking/' + id, data, {
@@ -2746,7 +2748,12 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (result) {
         console.warn('result', result);
-
+      });
+      axios.post('/api/email', data, {
+        headers: {
+          'Authorization': "Bearer ".concat(localStorage.getItem('token'))
+        }
+      }).then(function (result) {
         _this2.$router.push('/user/home');
       });
     },
@@ -2769,6 +2776,7 @@ __webpack_require__.r(__webpack_exports__);
         // console.log('j', l.split(','))
 
         _this3.selectedSeat = resps.split(',');
+        _this3.seat = _this3.selectedSeat.length;
       });
     }
   },
@@ -3251,11 +3259,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "User_Side_Bar",
   data: function data() {
     return {
-      isAuth: ''
+      isAuth: '',
+      str: ''
     };
   },
   methods: {
@@ -3264,6 +3274,19 @@ __webpack_require__.r(__webpack_exports__);
         this.seen = true;
         localStorage.removeItem('isAuth');
         this.$router.push('/');
+      }
+    },
+    Search: function Search() {
+      var _this = this;
+
+      if (this.str === "") {
+        this.search();
+      } else {
+        axios.get('/api/search/' + this.str).then(function (response) {
+          _this.movies = response.data;
+        })["catch"](function (error) {
+          console.log(error);
+        });
       }
     }
   }
@@ -43330,7 +43353,56 @@ var render = function() {
             [
               _vm._m(2),
               _vm._v(" "),
-              _vm._m(3),
+              _c("div", { staticStyle: { "margin-left": "350px" } }, [
+                _c(
+                  "form",
+                  {
+                    staticClass: "d-flex",
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.Search.apply(null, arguments)
+                      }
+                    }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.search,
+                          expression: "search"
+                        }
+                      ],
+                      staticClass: "form-control me-2",
+                      attrs: {
+                        type: "search",
+                        placeholder: "Search",
+                        "aria-label": "Search"
+                      },
+                      domProps: { value: _vm.search },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.search = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-success",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Search")]
+                    )
+                  ]
+                )
+              ]),
               _vm._v("      \n                "),
               !_vm.isAuth
                 ? _c("div", [
@@ -43432,29 +43504,6 @@ var staticRenderFns = [
             attrs: { "aria-current": "page", href: "#" }
           },
           [_vm._v("Contact Us")]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticStyle: { "margin-left": "350px" } }, [
-      _c("form", { staticClass: "d-flex" }, [
-        _c("input", {
-          staticClass: "form-control me-2",
-          attrs: {
-            type: "search",
-            placeholder: "Search",
-            "aria-label": "Search"
-          }
-        }),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-outline-success", attrs: { type: "submit" } },
-          [_vm._v("Search")]
         )
       ])
     ])

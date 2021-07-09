@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\category;
 use App\Models\Movie;
 use App\Models\MovieCategory;
 use App\Models\MovieTicket;
@@ -174,5 +175,24 @@ class MovieController extends Controller
         $response['data'] = $data;
 
         return $response;
+    }
+    public function search($search)
+    {
+
+          $data = MovieCategory::select('movies.*')
+                ->join('categories' , 'movie_categories.fkcat_id' ,'=' , 'categories.id' )
+                ->join('movies' , 'movie_categories.fkmovie_id' ,'=' , 'movies.id' )
+                ->where('movies.name','LIKE','%{$search}%')
+                ->orWhere('categories.type' , 'LIKE' , '%{$search}%')
+                ->distinct()
+                ->get();
+//        dd($data);
+//
+        $response['status'] = "success";
+        $response['massage'] = "Data Finding successfully";
+        $response['data'] = $data;
+
+        return $response;
+
     }
 }

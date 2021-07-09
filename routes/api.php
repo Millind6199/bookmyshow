@@ -26,10 +26,15 @@ Route::get('/viewdata' ,[MovieController::class,'show'])->middleware('auth:api')
 Route::get('/viewdata/{id}' ,[MovieController::class,'showById'])->middleware('auth:api');
 Route::delete('/deletedata/{id}',[MovieController::class , 'destroy'])->middleware('auth:api');
 Route::post('/edit/{id}',[MovieController::class,'update'])->middleware('auth:api');
+Route::get('/search/{search}',[MovieController::class, 'search'])->middleware('auth:api');
+Route::get('/search/{search}',[MovieController::class, 'search'])->middleware('auth:api');
+
 
 Route::get('/categories' ,[CategoryController::class,'show'])->middleware('auth:api');
 
 Route::post('/booking/{id}',[MovieTicketController::class,'store'] )->middleware('auth:api');
 Route::get('/bookedticket/{id}',[MovieTicketController::class,'getAllBookedSeats'])->middleware('auth:api');
 Route::get('/bookedtickets',[MovieTicketController::class,'show'])->middleware('auth:api');
-//Route::post('/login' , [LoginController::class,'store']);
+
+Route::get('/email', 'EmailController@create');
+Route::post('/email', 'EmailController@sendEmail')->middleware('auth:api');

@@ -83,6 +83,7 @@ class MovieTicketController extends Controller
         return $response;
     }
 
+
     /**
      * Show the form for editing the specified resource.
      *

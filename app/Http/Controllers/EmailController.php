@@ -3,31 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class EmailController extends Controller
 {
     public function create()
     {
 
-        return view('email');
+        return view('/Email/mail');
     }
     public function sendEmail(Request $request)
     {
+//        dd($request->all());
 //        $request->validate([
 //            'email' => 'required|email',
 //            'subject' => 'required',
 //            'content' => 'required',
 //        ]);
 
-        $email_id = auth()->guard('api')->user()->id;
+        $email_id = auth()->guard('api')->user()->email;
 
         $data = [
-            'subject' => $request->subject,
+            'subject' => "You booked movie-tickets successfully",
             'email' => $email_id,
             'content' => $request->content
         ];
 
-        Mail::send('email-template', $data, function($message) use ($data) {
+        Mail::send('/Email/mail', $data, function($message) use ($data) {
             $message->to($data['email'])
                 ->subject($data['subject']);
         });

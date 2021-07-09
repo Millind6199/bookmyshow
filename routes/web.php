@@ -17,8 +17,6 @@ Route::get('/{any}', function () {
     return view('welcome');
 })->where('any', '.*');
 
-Route::get('/email', 'EmailController@create');
-Route::post('/email', 'EmailController@sendEmail')->name('send.email');
 
 Auth::routes();
 

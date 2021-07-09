@@ -52,7 +52,7 @@ export default {
         return{
             movie_detail:[],
             screen:'',
-            seat:[],
+            seat:0,
             qty:'',
             showDate:'',
             selectedSeat:[],
@@ -75,7 +75,11 @@ export default {
         },
         BookTicket(id){
             let data = new FormData();
-            data.append('seat', this.selectedSeat);
+            let temp = this.selectedSeat
+            temp.splice(0 , this.seat)
+
+
+            data.append('seat', temp);
             data.append('qty', this.qty);
             data.append('showDate', this.showDate);
 
@@ -85,8 +89,19 @@ export default {
                 }
             }).then(result =>{
                         console.warn('result',result)
-                    this.$router.push('/user/home')
+
+
             })
+            axios.post('/api/email',data,{
+                headers : {
+                    'Authorization' : `Bearer ${localStorage.getItem('token')}`
+                }
+            }).then(result =>{
+                this.$router.push('/user/home')
+
+            })
+
+
 
         },
       getBookedSeat(){
@@ -106,7 +121,7 @@ export default {
                 // })
                 // console.log('j', l.split(','))
                 this.selectedSeat = resps.split(',')
-
+                this.seat = this.selectedSeat.length
             })
       },
 
